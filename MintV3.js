@@ -219,7 +219,7 @@ const Mint = () => {
                 });
             } catch (err) {
                 console.log("116 team mint err: ", err);
-                // alert("Team Mint: error estimating gas");
+                alert("Team Mint: error estimating gas");
                 return SmartContractObj;
             }
 
@@ -234,19 +234,19 @@ const Mint = () => {
 					to: CONTRACT_ADDRESS,
 					from: window.ethereum.selectedAddress});
 				console.log("132 WL mint receipt: ", receipt);
-                // alert("Team Mint: Successfully minted your Pitch NFTs! View them at " + OS_LINK);
+                alert("Team Mint: Successfully minted your Pitch NFTs! View them at " + OS_LINK);
                 return SmartContractObj;
 			}
 			catch (err) {
 				console.log("135 WL mint err", err);
-				// alert("Team Mint: error minting your NFT(s).");
+				alert("Team Mint: error minting your NFT(s).");
                 return SmartContractObj;
             }
         } else {
             let localSaleState = await SmartContractObj.methods.saleState().call();
             localSaleState = Number(localSaleState)
             if (localSaleState === 0) {
-                // alert("Error: sale is not active (WL).");
+                alert("Error: sale is not active (WL).");
                 return SmartContractObj;
             } else if (localSaleState === 2) { // public
                 let totalCostWei = await SmartContractObj.methods.tokenCostPublic().call();
@@ -259,7 +259,7 @@ const Mint = () => {
                     });
                 } catch (err) {
                     console.log("151 mint err: ", err);
-                    // alert("Mint: error estimating gas");
+                    alert("Mint: error estimating gas");
                     return SmartContractObj;
                 }
     
@@ -276,17 +276,17 @@ const Mint = () => {
                         value: totalCostWei
                     });
                     console.log("165 mint receipt: ", receipt);
-                    // alert("Successfully minted your Pitch NFTs! View them at " + OS_LINK)
+                    alert("Successfully minted your Pitch NFTs! View them at " + OS_LINK)
                     return SmartContractObj;
                 }
                 catch (err) {
                     console.log("135 WL mint err", err);
-                    // alert("Team Mint: error minting your NFT(s).");
+                    alert("Team Mint: error minting your NFT(s).");
                     return SmartContractObj;
                 }
             } else {
                 if (mintType !== "wl") {
-                    // alert("Error: public sale is not yet active and this wallet is not WL'd.");
+                    alert("Error: public sale is not yet active and this wallet is not WL'd.");
                     return SmartContractObj;
                 }
                 let totalCostWei = await SmartContractObj.methods.tokenCostWl().call();
@@ -300,7 +300,7 @@ const Mint = () => {
                     });
                 } catch (err) {
                     console.log("182 WL mint err: ", err);
-                    // alert("WL Mint: error estimating gas");
+                    alert("WL Mint: error estimating gas");
                     return SmartContractObj;
                 }
     
@@ -317,12 +317,12 @@ const Mint = () => {
                         value: totalCostWei
                     });
                     console.log("196 WL mint receipt: ", receipt);
-                    // alert("WL Mint: Successfully minted your Pitch NFTs! View them at " + OS_LINK)
+                    alert("WL Mint: Successfully minted your Pitch NFTs! View them at " + OS_LINK)
                     return SmartContractObj;
                 }
                 catch (err) {
                     console.log("200 WL mint err", err);
-                    // alert("WL Mint: error minting your NFT(s).");
+                    alert("WL Mint: error minting your NFT(s).");
                     return SmartContractObj;
                 }
             }
@@ -333,8 +333,7 @@ const Mint = () => {
         setIsButtonDisabled(true);
 
         if (!isWalletConnected) {
-            console.log("Not connected")
-            // alert("Must Connect Wallet Before Incrementing Mint Amount.")
+            alert("Must Connect Wallet Before Incrementing Mint Amount.")
         } else{
             Web3EthContract.setProvider(window.ethereum);
             const web3 = new Web3(window.ethereum);
@@ -354,7 +353,7 @@ const Mint = () => {
                 console.log("mintType: ", mintType)
 
                 if (mintType !== "team") {
-                    // alert("Mint is inactive")
+                    alert("Mint is inactive")
                     maxPerWalletTotal = 0
                     totalMinted = 0
                 } else {
@@ -416,7 +415,7 @@ const Mint = () => {
                 <Flex w={["100%", "50%"]} height={["70%"]} mt={["0", "12"]} bg="rgba(255,255,255,0.05)" borderRadius="8px" ml={[0, "25%"]} padding={["4%","1%"]} direction="column" align="center">
                     <h1 className="mintHeader" fontFamily="PoppinsExtraBold" fontSize="24px">Pitch Mint</h1>
 
-                    {/* <Text marginBottom="12px">Wallet Address: 0x...{window.ethereum.selectedAddress ? String(window.ethereum.selectedAddress).substring(String(window.ethereum.selectedAddress.length - 4)) : "????"}</Text> */}
+                    <Text marginBottom="12px">Wallet Address: 0x...{window.ethereum.selectedAddress ? String(window.ethereum.selectedAddress).substring(String(window.ethereum.selectedAddress.length - 4)) : "????"}</Text>
                     {!isWalletConnected && !connectError &&
                         <button className="ConnectMintButton" disabled={isButtonDisabled} onClick={handleConnectWallet}>Connect Wallet</button>
                     }
